@@ -16,7 +16,6 @@ Alternative, we can use Airflow to schedule as the number of pipelines increases
 S1_datapipeline.py
 The script will check for all .csv files in the directory and will process all of them. 
 
-
 Assumptions: 
  1. New files will be provided in the path "Data-Engineer-Tech-Challenge"
  2. New files will be overwritten by 1am daily
@@ -32,9 +31,7 @@ The code will take in an argument from cronjob to indicate as the processing dat
     4c. first_name and last_name are processed based on space delimited.
 5. Processed file will be output to the designated output directory
 
-
 In current implementation, is using Pandas to process which is single machine computation. It can be improved to be implemented in Pyspark instead, it will provide scalability and handling huge volume of data
-
 
 ```py
 import pandas as pd
@@ -42,6 +39,7 @@ import os
 import sys
 
 setpath='Data-Engineer-Tech-Challenge/'
+saluationlist =['mr.','ms.','mrs.','dr.','mdm.']
 
 #Describe data to understand data structure
 #dff["name"].describe()
@@ -67,8 +65,8 @@ def main(statdate):
 	    dff=dff[dff["name"] != ""]
 	    # Converting to float, will remove any prepended 0; 
 	    dff["price"]= dff.price.astype(float) 
-	    dff["first_name"] = dff["name"].transform(lambda x: x.split(" ")[0])
-	    dff["last_name"] = dff["name"].transform(lambda x: " ".join(x.split(" ")[1:]) )
+	    dff["first_name"] = dff["name"].transform(lambda x: x.split(" ")[1] if x.split(" ")[0].lower() in saluationlist else x.split(" ")[0] )
+	    dff["last_name"] = dff["name"].transform(lambda x: " ".join(x.split(" ")[2:]) if x.split(" ")[0].lower() in saluationlist else " ".join(x.split(" ")[1:])  )
 	    dff["above_100"] = dff["price"].transform(lambda x: True if x > 100 else False )	    
 	    dff.to_csv(statdate+"/processed_"+file, sep=',')
 	    print("File to CSV completed", file)
@@ -80,5 +78,13 @@ if __name__ == '__main__':
 	main(statdate)
 ```
 
+# Section 2: Databases 
+
+
+ - Docker Image ( unable to upload large file, do let know if you need the file. it only contains PG with PG tables created based on below script. )
+ - Created a Database cardb and uses public schema for PG design  (refer to S2_databases.ddl)
+ - Entity Relationship Diagram (refer to er_diagram.jpg)
+- SQL Questions ( refer to S2_databases.sql)
+   
 
 
