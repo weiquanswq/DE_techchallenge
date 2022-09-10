@@ -16,6 +16,26 @@ Alternative, we can use Airflow to schedule as the number of pipelines increases
 S1_datapipeline.py
 The script will check for all .csv files in the directory and will process all of them. 
 
+
+Assumptions: 
+ 1. New files will be provided in the path "Data-Engineer-Tech-Challenge"
+ 2. New files will be overwritten by 1am daily
+ 3. New files will be sent in csv format
+ 
+The code will take in an argument from cronjob to indicate as the processing date. 
+1. It will pass the argument (YYYYMMDD) as statdate to the main function 
+2. It will check all .csv files that are in the folders. If there are more than 2 files, it will still be able to capture these files and process accordingly.
+3. The destination directory will be generated, it will be based on the statdate and will increment daily. This will differentiate each day and prevent overwritten of files 
+4.  For each file, it will loop through the data cleansing process
+    4a. dropna to remove any null names;  name != "" will remmove those that are empty
+    4b. Converting price to float, will remove any prepended 0
+    4c. first_name and last_name are processed based on space delimited.
+5. Processed file will be output to the designated output directory
+
+
+In current implementation, is using Pandas to process which is single machine computation. It can be improved to be implemented in Pyspark instead, it will provide scalability and handling huge volume of data
+
+
 ```py
 import pandas as pd
 import os
