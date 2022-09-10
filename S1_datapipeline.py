@@ -1,22 +1,3 @@
-# Data Engineer Tech Challenge
-
-
-## Section 1 : Data pipeline 
-
-### Scheduler
-Deploy below command in the crontab to schedule daily at 1am. 
-The cronjob will trigger the python script ,S1_datapipeline.py, and pass current date to the script as parameter in the following format (YYYMMDD). logs are be captured in S1_datapipeline.log for future troubleshooting incase of failure
-```sh
-0 1 * * * python S1_datapipeline.py $(date +%Y%m%d) > /var/log/S1_datapipeline.log 2>&1
-```
-
-Alternative, we can use Airflow to schedule as the number of pipelines increases. Airflow will be able to configure complex dependencies and will support backfilling of pipelines.
-
-### Scripts 
-S1_datapipeline.py
-The script will check for all .csv files in the directory and will process all of them. 
-
-```py
 import pandas as pd
 import os
 import sys
@@ -58,7 +39,4 @@ if __name__ == '__main__':
 	print ('Argument List:', str(sys.argv))
 	statdate = sys.argv[1]
 	main(statdate)
-```
-
-
 
