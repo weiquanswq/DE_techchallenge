@@ -105,12 +105,11 @@ if __name__ == '__main__':
 
 6. For Data Visualisation, will process Tableau and Flask. Tableau is more on graphical visualisation to analyse the data whereas Flask is more of a API services/ web application. Both of the visualisations are compatiable with Mysql as for Hbase, will need to wrap with Phoenix to make it a connectable using JDBC.
 
-# Section 4
+# Section 4 : Charts
 ![image](https://user-images.githubusercontent.com/23369572/189519263-f2c9a19b-d286-458f-a74a-dcbf6661ee16.png)
 
 The above dashbaord is done using Tableau with dummy test dateset (test.xlsx). 
-The dataset is expected to be updated hourly using API request. API request can be done using HTTP request using python library
-
+The dataset is expected to be updated hourly using API request. API request can be done using HTTP request using python library and extraction of values using json. However, due to time restriction, it was not implemented. 
 
 
 The dashboards consists of below charts 
