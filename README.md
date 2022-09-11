@@ -105,6 +105,24 @@ if __name__ == '__main__':
 
 6. For Data Visualisation, will process Tableau and Flask. Tableau is more on graphical visualisation to analyse the data whereas Flask is more of a API services/ web application. Both of the visualisations are compatiable with Mysql as for Hbase, will need to wrap with Phoenix to make it a connectable using JDBC.
 
+# Section 4
+![image](https://user-images.githubusercontent.com/23369572/189519263-f2c9a19b-d286-458f-a74a-dcbf6661ee16.png)
+
+The above dashbaord is done using Tableau with dummy test dateset (test.xlsx). 
+The dataset is expected to be updated hourly using API request. API request can be done using HTTP request using python library
+
+
+
+The dashboards consists of below charts 
+ 1. Big Number chart - this will display the number of cases for today. It will take the latest hour value based on available datasets
+ 2. DOD: day over day comparison. it will compare with yesterday 23hours confirmed cases count and indicate the difference in changes. This value will be kept updated as new hourly data comes in. If it is lower than yesterday count, it will be green color codedand turned red if it becomes more than yesterday. 
+3. Last updated time - it will capture the last updated time.
+4. trendline 7D, it will show last 7 days of confirmed cased. The date will move accordingly.
+
+Future improvement
+1. API can be setup using airflow to pull updated data hourly through cronjob/ Airflow 
+2. Changing datasource from excel to relational database connection 
+
 
 
 # Section 5 : Machine learning
