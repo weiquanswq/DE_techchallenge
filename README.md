@@ -85,7 +85,9 @@ if __name__ == '__main__':
  - Created a Database cardb and uses public schema for PG design  (refer to S2_databases.ddl)
  - Entity Relationship Diagram (refer to er_diagram.jpg)
 - SQL Questions ( refer to S2_databases.sql)
-   
+
+$ Section 3 : System Design
+![image](https://user-images.githubusercontent.com/23369572/189514936-fbd0560f-ce82-4628-8a82-1a39593a67c1.png)
 
 
 
