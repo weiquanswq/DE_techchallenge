@@ -91,6 +91,22 @@ if __name__ == '__main__':
 
 
 
+1.  Since the data source is send over kafka broker, I would recommend Apache flume to do the ingestion of the image files. Not only can Flume consume from kafka broker, it also supports alot of source connections and as the project decided to read from different data sources, flume will be able to accomodate accordingly.Most importantly, Flume is able to scale easily when the data volume increases/decreases by starting/shutting down the agents. If connection allows, it can even access the web server to pull image files instead of going through kafka server.
+
+2.  Flume has a HDFS sink which allows file to be written to the HDFS directly. HDFS is a distributed file System which act as a data lake storage. It will store all of the files and will only be processed when needed. Since HDFS is a file system, it will be ideal for storing unstructured data such as image, video. 
+
+3.  Spark is recommended as the processing engine for image processing. Spark has a wide range of Machine Learning libraries and supports common language such as Python and Scala. Spark will be able to process data in parallel and ideal for processing large amount of data. Spark will be able to read/write on the HDFS and to fulfill Business Intelligence (BI)  key statistics analysis. After inital processing of images, the output/results (which will be structured format) can be written back to HDFS/ Hive table for future analysis. Likewise, Spark is able to interact with Hive table and using SQL-like to process and analyse the data. SQL is a commonly known query language which BI will be able to self-serve to analyse the data for more insights.
+
+4.  Airflow is used as a scheduler and orchestration. It serves 2 purposes based on our current use case.   
+- 1) it is to do house cleaning of HDFS. As the ingestion continues to run 24/7, the storage in HDFS will increase and some of the legacy data might not be used frequency. Airflow is able to schedule housekeeping daily to move legacy data to another location for achive or even delete to free up more space. This process will ensure the default directory only contains warm data and will increase processing perforamnce as lesser files/directory to process. However, there is a downside, is that there will be data movement and have to have a separate script to process cold data. 
+- 2) BI team might have daily/ hourly pipeline which will need to run for their reporting. Airflow will be able to trigger the routine job and automate the entire process. For example, If BI want to know total number of images sent from webserver per day, this can be written into a spark schedule job to trigger in the morning and the results can be seen first thing then they reach office.
+
+5. The Storage consists of final results output. HDFS is suitable to store raw/detailed information but it will take longer time to read due to getting resources and network latency. The storage in this section is mainly for commonly use data which are used for analysis. MYSQL is a relation Database where data is stored in a structured/Tabluar format. For example, Data scientist/BI which will need to revisist the output of the results consistently to find insights, they can read from MYSQL which able to compute analysis more efficiently than interacting with HDFS. As for Hbase is a non-relational database which is suitable for columnar data-storage where we want to store large amount of data. For example, In our current usecase, we want to know which customer has processed which type of images. the number of customer will be huge and the type of images can have many categories, it is not practical to have a fix structure of customer to categories combination. It will be wasting data storage as most of it will be empty. by storing it in Hbase, it will only store which ever categories that are applicable to the customer and resulting in saving more spaces. In addition, by setting Customer ID as the key, the performance of Hbase is able to retrieve specific key out faster and more efficiently.
+
+6. For Data Visualisation, will process Tableau and Flask. Tableau is more on graphical visualisation to analyse the data whereas Flask is more of a API services/ web application. Both of the visualisations are compatiable with Mysql as for Hbase, will need to wrap with Phoenix to make it a connectable using JDBC.
+
+
+
 # Section 5 : Machine learning
 Predicted Value is "Low" buying power and the code and model is available in the python script. (refer to S5-Machine_learning.ipynb)
 
