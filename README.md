@@ -81,10 +81,26 @@ if __name__ == '__main__':
 # Section 2: Databases 
 
 
- - Docker Image ( unable to upload large file, do let know if you need the file. it only contains PG with PG tables created based on below script. )
+ - Docker Image ( import container using wq_postgres.tar )
  - Created a Database cardb and uses public schema for PG design  (refer to S2_databases.ddl)
  - Entity Relationship Diagram (refer to er_diagram.jpg)
 - SQL Questions ( refer to S2_databases.sql)
    
 
 
+
+# Section 5 : Machine learning
+Predicted Value is "Low" buying power and the code and model is available in the python script. (refer to S5-Machine_learning.ipynb)
+
+There are some handling that are taken within the script. 
+- The current Machine learning problem is Classification problem. 
+- The distribution of Class output is skewed towards unacc and acc which resulting the model is not well-trained
+-- Based on the test record, I have filtered keeping only good and vgood class but resulting in only 130 records for training.
+-- Further do a 7:3 split for train and test datasets for training of models.
+- Tried implementing Logistic regression, Random forest and Decision trees and Logistic regression has a training accuaracy of 63%. Whereas the other 2 models are around 43%. However, all 3 of the models predicted "Low" output for the below parameters 
+-- Maintenance = High
+-- Number of doors = 4
+-- Lug Boot Size = Big
+-- Safety = High
+-- Class Value = Good
+ 
